@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B1430">
+  <meta name="color-scheme" content="dark">
+  <title>Creative Automation Race</title>
+  <meta name="description" content="Race door het vak Creative Automation: rij langs vijf pitstops en ontdek wat je leert, van Photoshop-acties tot e-mailmarketing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Tilt+Neon&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+  <canvas id="game" tabindex="0" inert role="application" aria-roledescription="racespel" aria-label="Racebaan. Stuur met de pijltjestoetsen, ZQSD of WASD, of laat de auto je muis volgen."></canvas>
+
+  <!-- HUD tijdens het racen -->
+  <div id="hud" class="hud" hidden>
+    <h1 class="sr-only" translate="no">Creative Automation Race</h1>
+    <div class="hud-row hud-left">
+      <div class="glass hud-box" id="hud-cans-box"><span class="can-icon" aria-hidden="true"></span><span class="sr-only">Jerrycans</span><span id="hud-cans">00/20</span></div>
+      <div class="glass hud-box"><div class="cps" id="hud-cps" role="img" aria-label="0 van 5 pitstops gehaald"></div></div>
+    </div>
+    <p class="glass hint" id="hud-hint" aria-live="polite"></p>
+    <div class="glass minimap"><canvas id="minimap" width="220" height="150" role="img" aria-label="Minikaart van het parcours met je auto en de pitstops"></canvas></div>
+    <!-- Legende van de toetsen, naast de minimap (enkel op desktop) -->
+    <ul class="glass key-legend" aria-label="Toetsen">
+      <li><span><kbd>Z</kbd> of <kbd>W</kbd></span><span>gas</span></li>
+      <li><span><kbd>Q</kbd> of <kbd>A</kbd></span><span>links</span></li>
+      <li><span><kbd>S</kbd></span><span>rem</span></li>
+      <li><span><kbd>D</kbd></span><span>rechts</span></li>
+    </ul>
+
+    <!-- Zijpaneel: toont het hoofdstuk van de laatste pitstop -->
+    <aside class="side" id="side" aria-label="Hoofdstuk">
+      <div class="panel-head"><span id="ps-count">Pitstop 0/5</span><span><span class="can-icon" aria-hidden="true"></span><span class="sr-only">Jerrycans</span> <span id="ps-cans">00/20</span></span></div>
+      <div class="pit" id="pit" hidden>
+        <div class="pit-row"><span>Tanken, lees mee</span><span><span id="pit-count">8</span> s</span></div>
+        <div class="pit-bar" role="progressbar" aria-label="Tanken" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pit-bar"><span id="pit-fill"></span></div>
+      </div>
+      <div class="side-body" id="side-body" tabindex="0" aria-live="polite" aria-atomic="true">
+        <figure class="panel-art" id="ps-art"></figure>
+        <h2 id="ps-title"></h2>
+        <p class="sub" id="ps-sub"></p>
+        <p class="side-text" id="ps-text"></p>
+      </div>
+    </aside>
+  </div>
+
+  <div id="banner" class="banner" role="status"></div>
+
+  <!-- Startscherm -->
+  <section id="start" class="screen start" aria-labelledby="start-title">
+    <div class="sky" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="sun"></div>
+      <div class="floor"><div class="grid"></div></div>
+    </div>
+    <div class="start-content">
+      <p class="kicker">Digitale Vormgeving, 2de jaar</p>
+      <h1 id="start-title" class="neon-title" translate="no">Creative<br>Automation</h1>
+      <p class="glass intro">Creative Automation leert je hoe je als digitale vormgever repetitief werk automatiseert en AI inzet als creatieve assistent. Je werkt minder met de hand, produceert meer varianten en houdt toch de controle over het design.</p>
+      <button class="btn" id="start-btn" type="button">Start de race</button>
+      <p class="keys" id="keys-hint">Je auto volgt je muis. Pijltjestoetsen, ZQSD of WASD werken ook.</p>
+    </div>
+    <button class="motion-toggle" id="motion-btn" type="button" aria-pressed="false">Achtergrond pauzeren</button>
+  </section>
+
+  <!-- Finish -->
+  <div id="finish" class="overlay finish-screen" hidden>
+    <div class="checker" aria-hidden="true"></div>
+    <div class="finish" role="dialog" aria-modal="true" aria-labelledby="fin-title" aria-describedby="fin-text">
+      <p class="kicker">Alle 5 pitstops gehaald</p>
+      <h2 id="fin-title" class="neon-title finish-title">Finish!</h2>
+      <p class="glass fin-text" id="fin-text">Doorheen het semester werk je aan een periodeopdracht: een volledige marketingcampagne voor een product, van briefing tot afgewerkte content.</p>
+      <div class="score">
+        <div class="glass"><span class="can-icon" aria-hidden="true"></span><span class="sr-only">Jerrycans</span><span id="fin-cans">00/20</span></div>
+        <div class="glass" id="fin-time">Tijd 0:00</div>
+      </div>
+      <button class="btn" id="fin-btn" type="button">Opnieuw racen</button>
+    </div>
+    <div class="checker" aria-hidden="true"></div>
+  </div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
